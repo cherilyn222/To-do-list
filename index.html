@@ -30,7 +30,7 @@
             align-items: flex-start;
             justify-content: center;
             padding: 16px;
-            visibility: hidden; 
+            visibility: hidden;
         }
 
         .title {
@@ -332,9 +332,24 @@
                 <button data-filter="done">Done</button>
             </div>
         </div>
+
+        <button id="logout-btn" style="
+    margin-left: auto;
+    margin-top: 6px;
+    font-size: 11px;
+    padding: 4px 10px;
+    background: #334155;
+    color: #e5e7eb;
+    border-radius: 8px;
+">
+            Logout
+        </button>
+
     </div>
 
     <script type="module">
+        import { signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
         import {
             getAuth,
@@ -380,6 +395,8 @@
         const emptyState = document.getElementById('empty-state');
         const counter = document.getElementById('counter');
         const filterBtns = document.querySelectorAll('.filter-btns button');
+        const logoutBtn = document.getElementById('logout-btn');   // ← 新增
+
 
         let todos = [];
         let currentFilter = 'all';
@@ -543,6 +560,11 @@
                 .catch(err => alert(err.message));
         });
 
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserId = user.uid;
@@ -563,4 +585,3 @@
 </body>
 
 </html>
-
