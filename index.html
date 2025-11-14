@@ -57,11 +57,13 @@
             margin-top: 140px;
             transform: scale(1.5);
             transform-origin: top center;
-            display: flex;
+            /* 一开始先隐藏，等 JS 再打开 */
+            display: none;
             flex-direction: column;
             max-height: 410px;
             overflow-y: auto;
         }
+
 
         #login-box {
             position: absolute;
@@ -73,7 +75,7 @@
             border-radius: 12px;
             box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
             border: 1px solid rgba(55, 65, 81, 0.8);
-            display: flex;
+            display: none;
             gap: 8px;
             flex-direction: column;
             width: 260px;
@@ -544,12 +546,12 @@
             if (user) {
                 currentUserId = user.uid;
                 loginBox.style.display = 'none';
-                appBox.style.display = 'block';
-                load();   // load 里已经会 render()
+                appBox.style.display = 'flex'; // 让 app 按原来 flex 布局显示
+                load();  // 里面已经会 render()
             } else {
                 currentUserId = null;
                 appBox.style.display = 'none';
-                loginBox.style.display = 'block';
+                loginBox.style.display = 'flex'; // 显示登录框
                 todos = [];
                 render();
             }
