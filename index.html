@@ -1,513 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>TO DO LIST</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-  <link rel="icon" type="image/png" href="faviconfinal.png?v=3">
-  <link rel="apple-touch-icon" href="faviconfinal.png?v=3">
-  <link rel="apple-touch-icon" sizes="180x180" href="faviconfinal.png?v=3">
-  <link rel="apple-touch-icon" sizes="152x152" href="faviconfinal.png?v=3">
-  <link rel="apple-touch-icon" sizes="167x167" href="faviconfinal.png?v=3">
-  <link rel="shortcut icon" type="image/png" href="faviconfinal.png?v=3">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-      background: #aec7ff;
-      color: #e5e7eb;
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .title {
-      font-family: 'Georgia', sans-serif;
-      position: absolute;
-      font-size: 80px;
-      font-weight: 600;
-      text-align: center;
-      color: #ff6397;
-      /* 柔粉 */
-      text-shadow: 0 4px 15px rgba(255, 150, 180, 0.4);
-      /* 温柔粉光 */
-      letter-spacing: 4px;
-      top: 40px;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 480px;
-      background: rgba(17, 29, 55, 0.95);
-      border-radius: 20px;
-      padding: 20px 18px 18px;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(55, 65, 81, 0.8);
-      margin-top: 140px;
-      transform: scale(1.5);
-      transform-origin: top center;
-      display: flex;
-      flex-direction: column;
-      max-height: 410px;
-      overflow-y: auto;
-    }
-
-    #login-box {
-      position: absolute;
-      top: 140px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(17,29,55,0.95);
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.45);
-      border: 1px solid rgba(55,65,81,0.8);
-      display: flex;
-      gap: 8px;
-      flex-direction: column;
-      width: 260px;
-    }
-
-    #login-box input {
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #4b5563;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 14px;
-      outline: none;
-    }
-
-    #login-box button {
-      padding: 8px 10px;
-      font-size: 14px;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 18px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      opacity: 0.8;
-      gap: 10px;
-      font-size: 13px;
-      color: #6b7280;
-    }
-
-    .empty-owl {
-      width: 70px;
-      height: 70px;
-      animation: float 2.4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-      100% { transform: translateY(0); }
-    }
-
-    h1 {
-      font-size: 20px;
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: #9ca3af;
-      margin-bottom: 16px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 14px;
-      outline: none;
-    }
-
-    input[type="text"]::placeholder {
-      color: #6b7280;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 14px;
-      background: #ff6397;
-      color: #020617;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    button:active {
-      transform: scale(0.92);
-      opacity: 0.7;
-    }
-
-    button:disabled {
-      opacity: 0.4;
-      cursor: default;
-    }
-
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1 1 auto;
-      min-height: 0;
-      max-height: 360px;
-      overflow-y: auto;
-      padding-right: 2px;
-      scrollbar-width: none;
-    }
-
-    ul::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-
-    .todo-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 9px;
-      border-radius: 12px;
-      background: rgba(57, 188, 244, 0.9);
-      border: 1px solid rgba(208, 226, 255, 0.8);
-      font-size: 14px;
-      transition: transform 0.22s ease, opacity 0.22s ease;
-    }
-
-    .todo-item.new {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .todo-item.removing {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .todo-text {
-      flex: 1;
-      word-break: break-word;
-    }
-
-    .todo-item.done .todo-text {
-      text-decoration: line-through;
-      color: #6b7280;
-    }
-
-    .todo-meta {
-      font-size: 10px;
-      color: #ecf2ff;
-      margin-top: 2px;
-    }
-
-    .icon-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: 1px solid #ddebff;
-      color: #e5efff;
-      padding: 0;
-    }
-
-    .delete-btn:hover {
-      background: #ff2424;
-    }
-
-    .checkbox-btn:hover {
-      background: #1dcb26ee;
-    }
-
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    .filter-btns {
-      display: flex;
-      gap: 4px;
-    }
-
-    .filter-btns button {
-      padding: 4px 8px;
-      font-size: 11px;
-      background: transparent;
-      color: #9ca3af;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-
-    .filter-btns button.active {
-      border-color: #ff6397;
-      color: #e5e7eb;
-      background: rgba(197, 34, 162, 0.1);
-    }
-  </style>
-</head>
-
-<body>
-  <div id="login-box">
-    <input id="email" placeholder="email">
-    <input id="password" type="password" placeholder="password">
-    <button id="login-btn">Login</button>
-    <button id="signup-btn">Sign up</button>
-  </div>
-
-  <div class="title">TO DO LIST</div>
-
-  <div class="app" id="app">
-    <h1>To-Do</h1>
-    <p class="subtitle">喝杯咖啡醒醒 :)</p>
-
-    <div class="input-row">
-      <input id="todo-input" type="text" placeholder="写点什么，比如“复习 linear algebra”" />
-      <button id="add-btn" disabled>Add</button>
-    </div>
-
-    <ul id="todo-list"></ul>
-    <div class="empty" id="empty-state">
-      <img class="empty-owl" src="sleeping-owl.png" alt="owl" />
-      <p>现在还没有待办</p>
-    </div>
-
-    <div class="footer-row">
-      <span id="counter">0 items</span>
-      <div class="filter-btns">
-        <button data-filter="all" class="active">All</button>
-        <button data-filter="active">Active</button>
-        <button data-filter="done">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBfSJfjE-yxsrpXuwQuGePdgJze-jhX7vE",
-      authDomain: "to-do-list-f5c99.firebaseapp.com",
-      projectId: "to-do-list-f5c99",
-      storageBucket: "to-do-list-f5c99.firebasestorage.app",
-      messagingSenderId: "509666402176",
-      appId: "1:509666402176:web:ae1990d693e7816a472b65",
-      measurementId: "G-S3DSYGWLV0"
-    };
-
-    const firebaseApp = initializeApp(firebaseConfig);
-    const auth = getAuth(firebaseApp);
-
-    const loginBox   = document.getElementById('login-box');
-    const appBox     = document.getElementById('app');
-    const emailInput = document.getElementById('email');
-    const pwdInput   = document.getElementById('password');
-    const loginBtn   = document.getElementById('login-btn');
-    const signupBtn  = document.getElementById('signup-btn');
-
-    const input      = document.getElementById('todo-input');
-    const addBtn     = document.getElementById('add-btn');
-    const list       = document.getElementById('todo-list');
-    const emptyState = document.getElementById('empty-state');
-    const counter    = document.getElementById('counter');
-    const filterBtns = document.querySelectorAll('.filter-btns button');
-
-    let todos = [];
-    let currentFilter = 'all';
-
-    function save() {
-      localStorage.setItem('cherilyn_todos', JSON.stringify(todos));
-    }
-
-    function load() {
-      try {
-        const data = JSON.parse(localStorage.getItem('cherilyn_todos'));
-        if (Array.isArray(data)) todos = data;
-      } catch (e) {
-        todos = [];
-      }
-    }
-
-    function render() {
-      list.innerHTML = '';
-
-      const filtered = todos.filter(t => {
-        if (currentFilter === 'active') return !t.done;
-        if (currentFilter === 'done')   return  t.done;
-        return true;
-      });
-
-      filtered.forEach(todo => {
-        const li = document.createElement('li');
-        li.className = 'todo-item' + (todo.done ? ' done' : '');
-        li.dataset.id = todo.id;
-
-        const checkbox = document.createElement('button');
-        checkbox.className = 'icon-btn checkbox-btn';
-        checkbox.innerHTML = todo.done ? '✓' : '';
-        checkbox.title = '完成 / 取消完成';
-        checkbox.addEventListener('click', () => toggleTodo(todo.id));
-
-        const textWrapper = document.createElement('div');
-        textWrapper.className = 'todo-text';
-
-        const main = document.createElement('div');
-        main.textContent = todo.text;
-        textWrapper.appendChild(main);
-
-        const meta = document.createElement('div');
-        meta.className = 'todo-meta';
-        meta.textContent = new Date(todo.createdAt).toLocaleString();
-        textWrapper.appendChild(meta);
-
-        const delBtn = document.createElement('button');
-        delBtn.className = 'icon-btn delete-btn';
-        delBtn.innerHTML = '✕';
-        delBtn.title = '删除';
-        delBtn.addEventListener('click', () => deleteTodo(todo.id));
-
-        li.appendChild(checkbox);
-        li.appendChild(textWrapper);
-        li.appendChild(delBtn);
-
-        list.appendChild(li);
-      });
-
-      emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
-
-      const activeCount = todos.filter(t => !t.done).length;
-      counter.textContent = `${activeCount} left`;
-    }
-
-    function addTodo() {
-      const text = input.value.trim();
-      if (!text) return;
-      todos.unshift({
-        id: Date.now(),
-        text,
-        done: false,
-        createdAt: Date.now()
-      });
-      input.value = '';
-      addBtn.disabled = true;
-      save();
-      render();
-
-      const firstItem = document.querySelector('.todo-item');
-      if (firstItem) {
-        firstItem.classList.add('new');
-        setTimeout(() => firstItem.classList.remove('new'), 300);
-      }
-    }
-
-    function toggleTodo(id) {
-      todos = todos.map(t => t.id === id ? { ...t, done: !t.done } : t);
-      save();
-      render();
-    }
-
-    function deleteTodo(id) {
-      const li = document.querySelector(`li[data-id="${id}"]`);
-      if (!li) {
-        todos = todos.filter(t => t.id !== id);
-        save();
-        render();
-        return;
-      }
-      li.classList.add('removing');
-      setTimeout(() => {
-        todos = todos.filter(t => t.id !== id);
-        save();
-        render();
-      }, 220);
-    }
-
-    input.addEventListener('input', () => {
-      addBtn.disabled = input.value.trim().length === 0;
-    });
-
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !addBtn.disabled) addTodo();
-    });
-
-    addBtn.addEventListener('click', addTodo);
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        render();
-      });
-    });
-
-    loginBtn.addEventListener('click', () => {
-      signInWithEmailAndPassword(auth, emailInput.value, pwdInput.value)
-        .catch(err => alert(err.message));
-    });
-
-    signupBtn.addEventListener('click', () => {
-      createUserWithEmailAndPassword(auth, emailInput.value, pwdInput.value)
-        .catch(err => alert(err.message));
-    });
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        loginBox.style.display = 'none';
-        appBox.style.display   = 'block';
-        load();
-        render();
-      } else {
-        appBox.style.display   = 'none';
-        loginBox.style.display = 'block';
-      }
-    });
-  </script>
-</body>
-</html>
+    <meta charset="UTF-8">
+    <title> TO DO LIST</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link rel="icon" type="image/png" href="faviconfinal.png?v=3">
+
+    <!-- iOS 专用 -->
+    <link rel="apple-touch-icon" href="faviconfinal.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="faviconfinal.png?v=3">
+    <link rel="apple-touch-icon" sizes="152x152" href="faviconfinal.png?v=3">
+    <link rel="apple-touch-icon" sizes="167x167" href="faviconfinal.png?v=3">
+
+    <!-- Android Chrome -->
+    <link rel="shortcut icon" type="image/png" href="faviconfinal.png?v=3">
+
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+            background: #aec7ff;
+            color: #e5e7eb;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 16px;
+        }
+
+
+
+        .title {
+            font-family: 'Georgia', sans-serif;
+            position: absolute;
+            font-size: 80px;
+            font-weight: 600;
+            text-align: center;
+            color: #ff6397;
+            /* 柔粉 */
+            text-shadow: 0 4px 15px rgba(255, 150, 180, 0.4);
+            /* 温柔粉光 */
+            letter-spacing: 4px;
+            top: 40px;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(17, 29, 55, 0.95);
+            border-radius: 20px;
+            padding: 20px 18px 18px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            margin-top: 140px;
+            transform: scale(1.5);
+            transform-origin: top center;
+            display: flex;
+            flex-direction: column;
+            max-height: 410px;
+            overflow-y: auto;
+
+        }
+
+        .empty {
+            text-align: center;
+            padding: 18px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.8;
+            gap: 10px;
+        }
+
+        .empty-owl {
+            width: 70px;
+            height: 70px;
+            animation: float 2.4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(6px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .subtit
+Load More
