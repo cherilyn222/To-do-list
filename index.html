@@ -298,6 +298,51 @@
             color: #e5e7eb;
             background: rgba(197, 34, 162, 0.1);
         }
+
+        /* 放在你现有 <style> 的最后 */
+
+@media (max-width: 600px) {
+    body {
+        align-items: flex-start;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .title {
+        font-size: 40px;
+        top: 16px;
+        letter-spacing: 2px;
+    }
+
+    .app {
+        transform: none;          /* 手机上不要放大 */
+        margin-top: 110px;
+        max-width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+
+    #login-box {
+        top: 100px;
+        width: 90%;
+        transform: translateX(-50%);
+    }
+
+    .input-row {
+        gap: 6px;
+    }
+
+    button {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .empty-owl {
+        width: 54px;
+        height: 54px;
+    }
+}
+
     </style>
 </head>
 
@@ -587,6 +632,7 @@
 </body>
 
 </html>
+
 
 
 
